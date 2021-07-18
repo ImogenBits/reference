@@ -1,27 +1,30 @@
-#include <reference.h>
 #include <stdio.h>
+#include <reference.h>
+
 
 typedef struct {
-    int firstVar;
-    double secondVar;
+    int first;
+    double second;
+    char third;
 } myStruct;
 
-void modifyStructs(myStruct byValue, ByRef(myStruct, byRef))
-    byValue.firstVar = 10;
-    byValue.secondVar = 10.5;
-    byRef.firstVar = 20;
-    byRef.secondVar = 20.5;
+
+void modifyStruct(by_ref(myStruct, byRef)) {
+    byRef.first = 10;
+    byRef.second = 3.1415;
+    byRef.third = 'y';
 }
 
+
 int main() {
-    myStruct firstStruct = {1, 2};
-    MakeRef(myStruct, secondStruct) = {3, 4};
-    printf("firstStruct: {%d, %f}\n", firstStruct.firstVar, firstStruct.secondVar);
-    printf("secondStruct: {%d, %f}\n", secondStruct.firstVar, secondStruct.secondVar);
+    myStruct firstStruct = {1, 2, 'a'};
+    myStruct secondStruct = {3, 4, 'b'};
+    printf("firstStruct: {%d, %f, %c}\n", firstStruct.first, firstStruct.second, firstStruct.third);
+    printf("secondStruct: {%d, %f, %c}\n", secondStruct.first, secondStruct.second, secondStruct.third);
 
-    printf("modifyStructs()\n");
-    modifyStructs(firstStruct, PassRef(secondStruct));
+    printf("modifyStruct()\n");
+    modifyStruct(RefTo secondStruct);
 
-    printf("firstStruct: {%d, %f}\n", firstStruct.firstVar, firstStruct.secondVar);
-    printf("secondStruct: {%d, %f}\n", secondStruct.firstVar, secondStruct.secondVar);
+    printf("firstStruct: {%d, %f, %c}\n", firstStruct.first, firstStruct.second, firstStruct.third);
+    printf("secondStruct: {%d, %f, %c}\n", secondStruct.first, secondStruct.second, secondStruct.third);
 }
