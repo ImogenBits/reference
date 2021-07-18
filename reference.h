@@ -15,13 +15,15 @@ typedef struct {
 } bigStruct;
 
 #define by_ref(type, varName) long var){ \
+    long rsp; \
     long newrsp = var - SPACERSIZE; \
     asm( \
-        "mov %%rsp, %%r12 \n\t" \
-        "mov %0, %%rsp \n\t" \
+        "mov %%rsp, %0 \n\t" \
+        "mov %1, %%rsp \n\t" \
         "call FUNC" TOSTRING(__LINE__) "\n\t" \
-        "mov %%r12, %%rsp" \
-        :: "m" (newrsp) \
+        "mov %0, %%rsp" \
+        :"=m" (rsp) \
+        : "m" (newrsp) \
     ); \
 } \
 int PASTE(FUNC, __LINE__) (bigStruct FUNCSPACER, type varName) REM(
