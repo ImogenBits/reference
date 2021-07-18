@@ -8,13 +8,17 @@ typedef struct {
     char third;
 } myStruct;
 
+void modifyStructByVal(myStruct byVal) {
+    byVal.first = 10;
+    byVal.second = 3.1415;
+    byVal.third = 'y';
+}
 
-void modifyStruct(by_ref(myStruct, byRef)) {
+void modifyStructByRef(by_ref(myStruct, byRef)) {
     byRef.first = 10;
     byRef.second = 3.1415;
     byRef.third = 'y';
 }
-
 
 int main() {
     myStruct firstStruct = {1, 2, 'a'};
@@ -22,8 +26,9 @@ int main() {
     printf("firstStruct: {%d, %f, %c}\n", firstStruct.first, firstStruct.second, firstStruct.third);
     printf("secondStruct: {%d, %f, %c}\n", secondStruct.first, secondStruct.second, secondStruct.third);
 
-    printf("modifyStruct()\n");
-    modifyStruct(RefTo secondStruct);
+    printf("modify structs\n");
+    modifyStructByVal(firstStruct);
+    modifyStructByRef(RefTo secondStruct);
 
     printf("firstStruct: {%d, %f, %c}\n", firstStruct.first, firstStruct.second, firstStruct.third);
     printf("secondStruct: {%d, %f, %c}\n", secondStruct.first, secondStruct.second, secondStruct.third);

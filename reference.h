@@ -1,32 +1,27 @@
-#define SPACERSIZE 64
-#define FUNCSPACERSIZE 200
+#pragma clang diagnostic ignored "-Wreturn-type"
 
-#define MakeRef(type, var) \
-long long __VARADDR; \
-char __SPACER[SPACERSIZE];\
-__VARADDR = (long) __SPACER; \
-volatile type var
+#define SPACERSIZE 200
 
-#define PassRef(var) __VARADDR
+#define RefTo (long) &
 
-void nop(void) {}
 #define REM()
+#define PASTE_HELPER(a,b) a ## b
+#define PASTE(a,b) PASTE_HELPER(a,b)
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
 
-#define ByRef(type, var) long __VARADDR){ \
-volatile type var; \
-char __FUNCSPACER[FUNCSPACERSIZE]; \
-nop(); \
-long __rbp; \
-asm( \
-    "mov %%rbp, %0" \
-    :"=m" (__rbp) \
-); \
-char *__argStart = (char *) &var + sizeof(type); \
-long __argSize = __rbp -((long) __argStart); \
-long __newBase = __VARADDR + __argSize; \
-for (long i = 0; i < __argSize; i++) \
-    *(char *)(__VARADDR + i) = *(char *)(__argStart + i); \
-asm( \
-    "mov %0, %%rbp" \
-    ::"m" (__newBase) \
-); REM(
+typedef struct {
+    char a[SPACERSIZE];
+} bigStruct;
+
+#define by_ref(type, varName) long var){ \
+    long newrsp = var - SPACERSIZE; \
+    asm( \
+        "mov %%rsp, %%r12 \n\t" \
+        "mov %0, %%rsp \n\t" \
+        "call FUNC" TOSTRING(__LINE__) "\n\t" \
+        "mov %%r12, %%rsp" \
+        :: "m" (newrsp) \
+    ); \
+} \
+int PASTE(FUNC, __LINE__) (bigStruct FUNCSPACER, type varName) REM(
