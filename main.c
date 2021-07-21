@@ -27,8 +27,8 @@ int main() {
     printf("secondStruct: {%d, %f, %c}\n", secondStruct.first, secondStruct.second, secondStruct.third);
 
     printf("modify structs\n");
-    modifyStructByVal(firstStruct);
-    modifyStructByRef(secondStruct);
+    modifyStructByRef(firstStruct);
+    modifyStructByVal(secondStruct);
 
     printf("firstStruct: {%d, %f, %c}\n", firstStruct.first, firstStruct.second, firstStruct.third);
     printf("secondStruct: {%d, %f, %c}\n", secondStruct.first, secondStruct.second, secondStruct.third);
