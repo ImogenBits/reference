@@ -2,7 +2,6 @@
 
 #define SPACERSIZE 200
 
-#define REM()
 #define PASTE_HELPER(a,b) a ## b
 #define PASTE(a,b) PASTE_HELPER(a,b)
 #define STRINGIFY(x) #x
@@ -32,4 +31,4 @@ typedef struct {
         : "m" (addr) \
     ); \
 } \
-int PASTE(FUNC, __LINE__) (bigStruct FUNCSPACER, type varName) REM(
+int PASTE(FUNC, __LINE__) (bigStruct FUNCSPACER, type varName
