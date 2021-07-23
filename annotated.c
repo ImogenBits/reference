@@ -130,11 +130,7 @@ without needing to add code inside the function body.
 */
 
 
-
-
-// you really shouldn't call a function from a place you haven
-#pragma clang diagnostic ignored "-Wreturn-type"
-
+// reference.h
 
 #include <string.h>
 
@@ -149,6 +145,8 @@ typedef struct {
     char a[SPACERSIZE];
 } bigStruct;
 
+//the first part here goes back over the stack to find the original instance
+//of the passed argument, then we do the stack shenanigans explained above
 #define by_ref(type, varName) type var){ \
     long addr = 0; \
     for (int i = 1; i < SPACERSIZE; i++) { \
@@ -173,6 +171,7 @@ int PASTE(FUNC, __LINE__) (bigStruct FUNCSPACER, type varName
 
 
 
+//main.c
 
 #include <stdio.h>
 #include <reference.h>
