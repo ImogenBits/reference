@@ -167,7 +167,7 @@ typedef struct {
         : "m" (addr) \
     ); \
 } \
-int PASTE(FUNC, __LINE__) (bigStruct FUNCSPACER, type varName
+void PASTE(FUNC, __LINE__) (bigStruct FUNCSPACER, type varName
 
 
 

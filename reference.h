@@ -1,5 +1,3 @@
-#pragma clang diagnostic ignored "-Wreturn-type"
-
 #include <string.h>
 
 #define SPACERSIZE 200
